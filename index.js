@@ -4,10 +4,11 @@ const http = require("http");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://192.168.100.22:3000"],
+    origin: ["https://freechat-mocha.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
+
 const cors = require("cors");
 app.use(cors({ origin: "*" }));
 const users = {};
@@ -36,8 +37,9 @@ io.on("connection", (socket) => {
 });
 
 if (require.main === module) {
-  server.listen(8000, () => {
-    console.log("Node.js server running on http://localhost:8000");
+  const PORT = process.env.PORT || 8000;
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
